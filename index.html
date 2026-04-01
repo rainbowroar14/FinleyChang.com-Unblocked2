@@ -1693,29 +1693,50 @@
         /* Paint Game */
         .paint-container {
             position: fixed;
-            left: 180px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 800px;
-            height: 600px;
-            background: rgba(22, 27, 34, 0.95);
-            border: 1px solid #30363d;
-            border-radius: 8px;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            max-height: 100%;
+            background: rgba(22, 27, 34, 0.98);
+            border: none;
+            border-radius: 0;
             display: none;
             flex-direction: column;
-            z-index: 200;
+            z-index: 2500;
         }
         
         .paint-container.active {
             display: flex;
         }
         
+        body.light-mode .paint-container {
+            background: rgba(246, 248, 250, 0.98);
+        }
+        
         .paint-header {
-            padding: 15px;
+            padding: 14px 20px;
             border-bottom: 1px solid #30363d;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
+            gap: 16px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            z-index: 3;
+            background: rgba(22, 27, 34, 0.98);
+        }
+        
+        body.light-mode .paint-header {
+            background: rgba(246, 248, 250, 0.98);
+            border-bottom-color: #d0d7de;
+        }
+        
+        .paint-header .close-btn {
+            margin-left: auto;
+            font-size: 26px;
+            line-height: 1;
+            padding: 6px 14px;
         }
         
         .paint-header h3 {
@@ -1806,12 +1827,13 @@
         
         .paint-canvas-container {
             flex: 1;
+            min-height: 0;
             padding: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
             background: #fff;
-            overflow: hidden;
+            overflow: auto;
         }
         
         .paint-canvas {
@@ -1929,43 +1951,77 @@
             border-color: #30363d;
         }
         
-        /* Game Containers */
+        /* Game Containers (full-page overlay) */
         .game-container {
             position: fixed;
-            left: 180px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 600px;
-            max-height: 80vh;
-            background: rgba(22, 27, 34, 0.95);
-            border: 1px solid #30363d;
-            border-radius: 8px;
+            inset: 0;
+            left: 0;
+            top: 0;
+            transform: none;
+            width: 100%;
+            max-width: none;
+            height: 100%;
+            max-height: 100%;
+            background: rgba(22, 27, 34, 0.98);
+            border: none;
+            border-radius: 0;
             display: none;
             flex-direction: column;
-            z-index: 200;
+            z-index: 2500;
         }
         
         .game-container.active {
             display: flex;
         }
         
+        body.light-mode .game-container {
+            background: rgba(246, 248, 250, 0.98);
+        }
+        
         .game-header {
-            padding: 15px;
+            padding: 14px 20px;
+            padding-right: 16px;
             border-bottom: 1px solid #30363d;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            z-index: 3;
+            background: rgba(22, 27, 34, 0.98);
+        }
+        
+        body.light-mode .game-header {
+            background: rgba(246, 248, 250, 0.98);
+            border-bottom-color: #d0d7de;
         }
         
         .game-header h3 {
             color: #c9d1d9;
             margin: 0;
+            flex: 1;
+            min-width: 0;
+        }
+        
+        body.light-mode .game-header h3 {
+            color: #24292f;
+        }
+        
+        .game-header .close-btn {
+            flex-shrink: 0;
+            font-size: 26px;
+            line-height: 1;
+            padding: 6px 14px;
+            margin-left: auto;
         }
         
         .game-content {
             flex: 1;
+            min-height: 0;
             padding: 20px;
-            overflow-y: auto; 
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -2918,7 +2974,7 @@
         <div id="themeBackground" class="theme-background"></div>
         
         <!-- Command Bar -->
-        <div class="command-bar locked" id="commandBar">
+        <div class="command-bar" id="commandBar">
             <div class="command-input-container">
                 <span class="command-prompt">></span>
                 <input type="text" class="command-input" id="commandInput" placeholder="Type a command... (Press ; to focus)" onkeypress="if(event.key === 'Enter') executeCommand()">
@@ -2981,8 +3037,8 @@
                 <h3>Paint Game</h3>
                 <div class="paint-controls">
                     <button class="paint-btn" onclick="startPaintGame()">Play</button>
-                    <button class="close-btn" onclick="togglePaint()">×</button>
                 </div>
+                <button class="close-btn" onclick="togglePaint()" aria-label="Close">×</button>
             </div>
             <div class="paint-tools" id="paintTools" style="display: none;">
                 <div class="tool-group">
@@ -2997,9 +3053,9 @@
                 <div class="tool-group texture-selector" id="textureSelector">
                     <label>Texture:</label>
                     <div class="texture-btn active" data-texture="solid" title="Solid" style="background: linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000), linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000); background-size: 4px 4px; background-position: 0 0, 2px 2px;"></div>
-                    <div class="texture-btn locked" data-texture="dots" title="Dots (Unlock by changing colors)" style="background: radial-gradient(circle, #000 1px, transparent 1px); background-size: 4px 4px;"></div>
-                    <div class="texture-btn locked" data-texture="lines" title="Lines (Unlock by changing colors)" style="background: repeating-linear-gradient(0deg, #000, #000 1px, transparent 1px, transparent 4px);"></div>
-                    <div class="texture-btn locked" data-texture="grid" title="Grid (Unlock by changing colors)" style="background: linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px); background-size: 4px 4px;"></div>
+                    <div class="texture-btn" data-texture="dots" title="Dots" style="background: radial-gradient(circle, #000 1px, transparent 1px); background-size: 4px 4px;"></div>
+                    <div class="texture-btn" data-texture="lines" title="Lines" style="background: repeating-linear-gradient(0deg, #000, #000 1px, transparent 1px, transparent 4px);"></div>
+                    <div class="texture-btn" data-texture="grid" title="Grid" style="background: linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px); background-size: 4px 4px;"></div>
                 </div>
                 <button class="clear-btn" onclick="clearCanvas()">Clear</button>
             </div>
@@ -3677,48 +3733,22 @@
         // UNLOCK SYSTEM
         // ============================================
         
+        // Only folder games use the unlock system; chat, friends, command bar, themes, textures are always available
         const UNLOCK_TYPES = {
-            FINHUB: 'finhub',
-            CHAT: 'chat',
-            FRIENDS: 'friends',
             PAINT: 'paint',
-            COMMANDBAR: 'commandbar',
             CLICKER: 'clicker',
             MINESWEEPER: 'minesweeper',
-            THEMES: 'themes',
             SNAKE: 'snake'
         };
         
+        const GAME_UNLOCK_IDS = new Set(Object.values(UNLOCK_TYPES));
+        
         const UNLOCK_INFO = {
-            [UNLOCK_TYPES.FINHUB]: {
-                icon: '🚀',
-                name: 'FINHUB',
-                description: 'Welcome to FinHub! Click the logo to unlock.',
-                color: '#58a6ff'
-            },
-            [UNLOCK_TYPES.CHAT]: {
-                icon: '💬',
-                name: 'Chat',
-                description: 'Click the FinHub logo to unlock chat.',
-                color: '#1f6feb'
-            },
-            [UNLOCK_TYPES.FRIENDS]: {
-                icon: '👥',
-                name: 'Friends',
-                description: 'Send a chat message to unlock the friends system.',
-                color: '#3fb950'
-            },
             [UNLOCK_TYPES.PAINT]: {
                 icon: '🎨',
                 name: 'Paint',
                 description: 'Get one friend to unlock collaborative painting.',
                 color: '#bc8cff'
-            },
-            [UNLOCK_TYPES.COMMANDBAR]: {
-                icon: '⌨️',
-                name: 'Command Bar',
-                description: 'Draw something to unlock the command bar!',
-                color: '#ffa657'
             },
             [UNLOCK_TYPES.CLICKER]: {
                 icon: '🖱️',
@@ -3731,12 +3761,6 @@
                 name: 'Minesweeper',
                 description: 'Change your logo size to unlock minesweeper!',
                 color: '#f85149'
-            },
-            [UNLOCK_TYPES.THEMES]: {
-                icon: '🎨',
-                name: 'Themes',
-                description: 'Get 10 clicks to unlock themes!',
-                color: '#bc8cff'
             },
             [UNLOCK_TYPES.SNAKE]: {
                 icon: '🐍',
@@ -3764,58 +3788,22 @@
             const usernameLower = localStorage.getItem('loggedInUsernameLower') || username?.toLowerCase();
             if (!username || !database) return;
             
-            // Load unlocked features from Firebase
             readFromFirebase(`users/${usernameLower}/unlocks`).then((unlocks) => {
                 if (unlocks) {
                     Object.keys(unlocks).forEach(feature => {
-                        if (unlocks[feature]) {
+                        if (unlocks[feature] && GAME_UNLOCK_IDS.has(feature)) {
                             unlockedFeatures.add(feature);
                         }
                     });
                 }
-                // Chat is always unlocked
-                if (!unlockedFeatures.has(UNLOCK_TYPES.CHAT)) {
-                    unlockedFeatures.add(UNLOCK_TYPES.CHAT);
-                    if (database && usernameLower) {
-                        writeToFirebase(`users/${usernameLower}/unlocks/${UNLOCK_TYPES.CHAT}`, true);
-                    }
-                }
-                // Always unlock FRIENDS
-                if (!unlockedFeatures.has(UNLOCK_TYPES.FRIENDS)) {
-                    unlockFeature(UNLOCK_TYPES.FRIENDS);
-                }
                 
-                // Unlock all games instantly
-                if (!unlockedFeatures.has(UNLOCK_TYPES.PAINT)) {
-                    unlockFeature(UNLOCK_TYPES.PAINT);
-                }
-                if (!unlockedFeatures.has(UNLOCK_TYPES.CLICKER)) {
-                    unlockFeature(UNLOCK_TYPES.CLICKER);
-                }
-                if (!unlockedFeatures.has(UNLOCK_TYPES.MINESWEEPER)) {
-                    unlockFeature(UNLOCK_TYPES.MINESWEEPER);
-                }
-                if (!unlockedFeatures.has(UNLOCK_TYPES.SNAKE)) {
-                    unlockFeature(UNLOCK_TYPES.SNAKE);
-                }
-                
-                // Unlock themes feature instantly
-                if (!unlockedFeatures.has(UNLOCK_TYPES.THEMES)) {
-                    unlockFeature(UNLOCK_TYPES.THEMES);
-                }
-                
-                // Unlock all games in Firebase instantly
-                if (database && usernameLower) {
-                    writeToFirebase(`users/${usernameLower}/unlockedGames/wordle`, true);
-                    writeToFirebase(`users/${usernameLower}/unlockedGames/tetris`, true);
-                    writeToFirebase(`users/${usernameLower}/unlockedGames/blockblast`, true);
-                    writeToFirebase(`users/${usernameLower}/unlockedGames/pong`, true);
-                }
+                unlockTexture('dots');
+                unlockTexture('lines');
+                unlockTexture('grid');
                 
                 updateUIUnlocks();
             });
             
-            // Load stats
             readFromFirebase(`users/${usernameLower}/stats`).then((stats) => {
                 if (stats) {
                     messageCount = stats.messageCount || 0;
@@ -3824,15 +3812,13 @@
                     totalClicks = stats.totalClicks || 0;
                 }
                 
-                // Check texture unlocks
-                if (colorChangeCount >= 1) unlockTexture('dots');
-                if (colorChangeCount >= 3) unlockTexture('lines');
-                if (colorChangeCount >= 5) unlockTexture('grid');
-                
-                // Check theme unlocks
-                if (totalClicks >= 10) {
-                    checkUnlock(UNLOCK_TYPES.THEMES);
+                if (friendCount >= 1) {
+                    checkUnlock(UNLOCK_TYPES.PAINT);
                 }
+                if (friendCount >= 5) {
+                    checkUnlock(UNLOCK_TYPES.SNAKE);
+                }
+                
                 if (totalClicks >= 100) {
                     unlockTheme('clicker100');
                 }
@@ -3841,7 +3827,6 @@
                 }
             });
             
-            // Load unlocked themes
             readFromFirebase(`users/${usernameLower}/themes`).then((themes) => {
                 if (themes) {
                     Object.keys(themes).forEach(theme => {
@@ -3851,7 +3836,6 @@
                     });
                 }
                 
-                // Check if won minesweeper
                 readFromFirebase(`users/${usernameLower}/hasWonMinesweeper`).then((won) => {
                     if (won) {
                         hasWonMinesweeper = true;
@@ -3859,7 +3843,6 @@
                     }
                 });
                 
-                // Check if won snake
                 readFromFirebase(`users/${usernameLower}/hasWonSnake`).then((won) => {
                     if (won) {
                         hasWonSnake = true;
@@ -3868,55 +3851,30 @@
                 });
             });
             
-            // Load current theme
             readFromFirebase(`users/${usernameLower}/currentTheme`).then((theme) => {
                 if (theme && unlockedThemes.has(theme)) {
                     applyTheme(theme);
                 }
             });
-            
-            // Set up FINHUB logo click
-            const finhubTitle = document.getElementById('finhubTitle');
-            if (finhubTitle) {
-                finhubTitle.style.cursor = 'pointer';
-                finhubTitle.addEventListener('click', () => {
-                    checkUnlock(UNLOCK_TYPES.FINHUB);
-                });
-            }
         }
         
         function checkUnlock(type) {
-            if (unlockedFeatures.has(type)) return;
+            if (!GAME_UNLOCK_IDS.has(type) || unlockedFeatures.has(type)) return;
             
             let shouldUnlock = false;
             
             switch(type) {
-                case UNLOCK_TYPES.FINHUB:
-                    shouldUnlock = true; // Always unlock on click
-                    break;
-                case UNLOCK_TYPES.CHAT:
-                    shouldUnlock = true; // Always unlocked
-                    break;
-                case UNLOCK_TYPES.FRIENDS:
-                    shouldUnlock = true; // Always unlocked
-                    break;
                 case UNLOCK_TYPES.PAINT:
                     shouldUnlock = friendCount >= 1;
                     break;
-                case UNLOCK_TYPES.COMMANDBAR:
-                    shouldUnlock = hasDrawn; // Unlock after drawing
-                    break;
                 case UNLOCK_TYPES.CLICKER:
-                    shouldUnlock = logoColorChanged; // Unlock after changing logo color
+                    shouldUnlock = logoColorChanged;
                     break;
                 case UNLOCK_TYPES.MINESWEEPER:
-                    shouldUnlock = logoSizeChanged; // Unlock after changing logo size
-                    break;
-                case UNLOCK_TYPES.THEMES:
-                    shouldUnlock = totalClicks >= 10; // Unlock after 10 clicks
+                    shouldUnlock = logoSizeChanged;
                     break;
                 case UNLOCK_TYPES.SNAKE:
-                    shouldUnlock = friendCount >= 5; // Unlock after 5 friends
+                    shouldUnlock = friendCount >= 5;
                     break;
             }
             
@@ -3938,15 +3896,7 @@
                 writeToFirebase(`users/${usernameLower}/unlocks/${type}`, true);
             }
             
-            // Show unlock animation
             showUnlockAnimation(type);
-            
-            // If FINHUB is unlocked, also unlock CHAT
-            if (type === UNLOCK_TYPES.FINHUB && !unlockedFeatures.has(UNLOCK_TYPES.CHAT)) {
-                unlockFeature(UNLOCK_TYPES.CHAT);
-            }
-            
-            // Update UI
             updateUIUnlocks();
         }
         
@@ -3975,20 +3925,8 @@
             let targetPosition = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
             
             switch(type) {
-                case UNLOCK_TYPES.FINHUB:
-                    targetElement = document.getElementById('finhubTitle');
-                    break;
-                case UNLOCK_TYPES.CHAT:
-                    targetElement = document.getElementById('chatBtn');
-                    break;
-                case UNLOCK_TYPES.FRIENDS:
-                    targetElement = document.getElementById('friendsBtn');
-                    break;
                 case UNLOCK_TYPES.PAINT:
                     targetElement = document.getElementById('paintFolderItem');
-                    break;
-                case UNLOCK_TYPES.COMMANDBAR:
-                    targetElement = document.getElementById('commandBar');
                     break;
                 case UNLOCK_TYPES.CLICKER:
                     targetElement = document.getElementById('clickerFolderItem');
@@ -4039,32 +3977,23 @@
         function updateUIUnlocks() {
             const chatBtn = document.getElementById('chatBtn');
             const friendsBtn = document.getElementById('friendsBtn');
-            const paintBtn = document.getElementById('paintBtn');
             
             if (chatBtn) {
-                // CHAT is unlocked if FINHUB is unlocked (clicked logo) or CHAT is directly unlocked
-                if (unlockedFeatures.has(UNLOCK_TYPES.CHAT) || unlockedFeatures.has(UNLOCK_TYPES.FINHUB)) {
-                    chatBtn.classList.remove('locked');
-                    chatBtn.onclick = toggleChat;
-                } else {
-                    chatBtn.classList.add('locked');
-                    chatBtn.onclick = () => {
-                        alert('Unlock Chat by clicking the FinHub logo!');
-                    };
-                }
+                chatBtn.classList.remove('locked');
+                chatBtn.onclick = toggleChat;
             }
             
             if (friendsBtn) {
-                // Friends is now always unlocked
                 friendsBtn.classList.remove('locked');
                 friendsBtn.onclick = toggleFriends;
-                // Auto-unlock if not already unlocked
-                if (!unlockedFeatures.has(UNLOCK_TYPES.FRIENDS)) {
-                    unlockFeature(UNLOCK_TYPES.FRIENDS);
-                }
             }
             
-            // Update games folder items
+            const commandBar = document.getElementById('commandBar');
+            if (commandBar) {
+                commandBar.classList.remove('locked');
+            }
+            
+            // Games folder — only these use unlock progression
             const paintFolderItem = document.getElementById('paintFolderItem');
             if (paintFolderItem) {
                 if (unlockedFeatures.has(UNLOCK_TYPES.PAINT)) {
@@ -4077,21 +4006,6 @@
                     paintFolderItem.onclick = () => {
                         alert('Unlock Paint by getting one friend!');
                     };
-                }
-            }
-            
-            // Update command bar visibility
-            const commandBar = document.getElementById('commandBar');
-            if (commandBar) {
-                if (unlockedFeatures.has(UNLOCK_TYPES.COMMANDBAR)) {
-                    commandBar.classList.remove('locked');
-                    // Auto-show when unlocked
-                    if (!commandBar.classList.contains('active')) {
-                        commandBar.classList.add('active');
-                    }
-                } else {
-                    commandBar.classList.add('locked');
-                    commandBar.classList.remove('active');
                 }
             }
             
@@ -4264,7 +4178,7 @@
         
         function toggleCommandBar() {
             const commandBar = document.getElementById('commandBar');
-            if (commandBar && !commandBar.classList.contains('locked')) {
+            if (commandBar) {
                 if (commandBar.classList.contains('active')) {
                     commandBar.classList.remove('active');
                     document.getElementById('commandInput').blur();
@@ -4283,7 +4197,7 @@
             if (e.key === ';' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
                 e.preventDefault();
                 const commandBar = document.getElementById('commandBar');
-                if (commandBar && !commandBar.classList.contains('locked')) {
+                if (commandBar) {
                     if (!commandBar.classList.contains('active')) {
                         commandBar.classList.add('active');
                         setTimeout(() => {
@@ -4343,119 +4257,44 @@
             }
         }
         
-        function unlockEverything() {
+        function unlockEverything(silent) {
             const username = localStorage.getItem('loggedInUsername');
             const usernameLower = localStorage.getItem('loggedInUsernameLower') || (username ? username.toLowerCase() : null);
             
-            // Unlock all features
-            const allFeatures = [
-                UNLOCK_TYPES.FINHUB,
-                UNLOCK_TYPES.CHAT,
-                UNLOCK_TYPES.FRIENDS,
-                UNLOCK_TYPES.PAINT,
-                UNLOCK_TYPES.COMMANDBAR,
-                UNLOCK_TYPES.CLICKER,
-                UNLOCK_TYPES.MINESWEEPER,
-                UNLOCK_TYPES.THEMES,
-                UNLOCK_TYPES.SNAKE
-            ];
-            
-            allFeatures.forEach(feature => {
+            const gameFeatures = [UNLOCK_TYPES.PAINT, UNLOCK_TYPES.CLICKER, UNLOCK_TYPES.MINESWEEPER, UNLOCK_TYPES.SNAKE];
+            gameFeatures.forEach(feature => {
                 if (!unlockedFeatures.has(feature)) {
                     unlockFeature(feature);
                 }
             });
             
-            // Set flags for unlocks
-            logoColorChanged = true;
-            logoSizeChanged = true;
-            hasDrawn = true;
-            hasWonMinesweeper = true;
-            hasWonSnake = true;
-            totalClicks = Math.max(totalClicks, 10000); // Ensure 10k+ clicks for godclicker
-            
-            // Unlock all themes
-            unlockTheme('clicker100');
-            unlockTheme('minesweeper');
-            unlockTheme('godclicker');
-            unlockTheme('snake');
-            unlockTheme('grassland');
-            unlockTheme('topclicker');
-            unlockTheme('word');
-            unlockTheme('tetris');
-            unlockTheme('blockblast');
-            unlockTheme('pong');
-            
-            // Unlock all games
-            if (usernameLower && database) {
-                writeToFirebase(`users/${usernameLower}/unlockedGames/wordle`, true);
-                writeToFirebase(`users/${usernameLower}/unlockedGames/tetris`, true);
-                writeToFirebase(`users/${usernameLower}/unlockedGames/blockblast`, true);
-                writeToFirebase(`users/${usernameLower}/unlockedGames/pong`, true);
-                
-                // Unlock Hexagon game (if it has unlock requirement)
-                const hasPlayedHexagon = true;
-                if (hasPlayedHexagon) {
-                    unlockTheme('grassland');
-                }
+            const commandBar = document.getElementById('commandBar');
+            if (commandBar) {
+                commandBar.classList.remove('locked');
+            }
+            const friendsBtn = document.getElementById('friendsBtn');
+            if (friendsBtn) {
+                friendsBtn.classList.remove('locked');
+                friendsBtn.onclick = toggleFriends;
             }
             
-            // Unlock all textures
-            unlockTexture('dots');
-            unlockTexture('lines');
-            unlockTexture('grid');
-            
-            // Set additional flags
-            hasPlayedHexagonGame = true;
-            
-            // Save to Firebase
             if (usernameLower && database) {
-                // Save all unlocks
-                allFeatures.forEach(feature => {
+                gameFeatures.forEach(feature => {
                     writeToFirebase(`users/${usernameLower}/unlocks/${feature}`, true);
                 });
-                
-                // Save all themes
-                writeToFirebase(`users/${usernameLower}/themes/clicker100`, true);
-                writeToFirebase(`users/${usernameLower}/themes/minesweeper`, true);
-                writeToFirebase(`users/${usernameLower}/themes/godclicker`, true);
-                writeToFirebase(`users/${usernameLower}/themes/snake`, true);
-                writeToFirebase(`users/${usernameLower}/themes/grassland`, true);
-                writeToFirebase(`users/${usernameLower}/themes/topclicker`, true);
-                writeToFirebase(`users/${usernameLower}/themes/word`, true);
-                writeToFirebase(`users/${usernameLower}/themes/tetris`, true);
-                writeToFirebase(`users/${usernameLower}/themes/blockblast`, true);
-                writeToFirebase(`users/${usernameLower}/themes/pong`, true);
-                
-                // Save unlocked games
                 writeToFirebase(`users/${usernameLower}/unlockedGames/wordle`, true);
                 writeToFirebase(`users/${usernameLower}/unlockedGames/tetris`, true);
                 writeToFirebase(`users/${usernameLower}/unlockedGames/blockblast`, true);
                 writeToFirebase(`users/${usernameLower}/unlockedGames/pong`, true);
-                
-                // Save stats
-                writeToFirebase(`users/${usernameLower}/stats/totalClicks`, 10000);
-                writeToFirebase(`users/${usernameLower}/hasWonMinesweeper`, true);
-                writeToFirebase(`users/${usernameLower}/hasWonSnake`, true);
-                writeToFirebase(`users/${usernameLower}/hasPlayedHexagonGame`, true);
-                
-                // Set clicker score high enough to be #1 (for topclicker theme)
-                writeToFirebase(`clickerScores/${usernameLower}`, {
-                    username: username,
-                    usernameLower: usernameLower,
-                    score: 999999,
-                    timestamp: Date.now()
-                });
             }
             
-            // Update UI to reflect all unlocks
             updateUIUnlocks();
-            
-            // Reload themes to show all unlocked
             loadThemes();
             
-            playSuccessSound();
-            alert('🎉 Everything unlocked!');
+            if (!silent) {
+                playSuccessSound();
+                alert('🎉 Command bar, friends, and all games unlocked!');
+            }
         }
         
         async function resetAccount() {
@@ -4805,16 +4644,6 @@
                 writeToFirebase(`users/${usernameLower}/stats/colorChangeCount`, colorChangeCount);
             }
             
-            // Unlock textures based on color changes
-            if (colorChangeCount >= 1 && !unlockedTextures.has('dots')) {
-                unlockTexture('dots');
-            }
-            if (colorChangeCount >= 3 && !unlockedTextures.has('lines')) {
-                unlockTexture('lines');
-            }
-            if (colorChangeCount >= 5 && !unlockedTextures.has('grid')) {
-                unlockTexture('grid');
-            }
         }
         
         // ============================================
@@ -4943,11 +4772,6 @@
                     writeToFirebase(`users/${usernameLower}/stats/messageCount`, messageCount);
                 }
                 
-                // Check unlocks
-                if (messageCount === 1) {
-                    checkUnlock(UNLOCK_TYPES.CHAT);
-                    checkUnlock(UNLOCK_TYPES.FRIENDS);
-                }
             });
         }
         
@@ -5154,9 +4978,11 @@
                         writeToFirebase(`users/${usernameLower}/stats/friendCount`, friendCount);
                     }
                     
-                    // Check paint unlock
                     if (friendCount >= 1) {
                         checkUnlock(UNLOCK_TYPES.PAINT);
+                    }
+                    if (friendCount >= 5) {
+                        checkUnlock(UNLOCK_TYPES.SNAKE);
                     }
                 });
             });
@@ -6426,10 +6252,8 @@
                     localStrokes.push(currentStroke);
                     currentStroke = null;
                     
-                    // Mark that user has drawn and check for command bar unlock
                     if (!hasDrawn) {
                         hasDrawn = true;
-                        checkUnlock(UNLOCK_TYPES.COMMANDBAR);
                     }
                 }
                 paintCtx.beginPath();
@@ -6710,10 +6534,6 @@
             // Create particle effects
             createClickerParticles();
             
-            // Check for theme unlocks
-            if (totalClicks === 10) {
-                checkUnlock(UNLOCK_TYPES.THEMES);
-            }
             if (totalClicks === 100) {
                 unlockTheme('clicker100');
             }
@@ -12082,7 +11902,10 @@
                     const scoreArray = Object.values(clickerScores)
                         .filter(entry => entry && entry.username)
                         .sort((a, b) => (b.score || 0) - (a.score || 0));
-                    const rank = scoreArray.findIndex(entry => entry.usernameLower === usernameLower) + 1;
+                    const rank = scoreArray.findIndex(entry => {
+                        const entryLower = entry.usernameLower || (entry.username ? entry.username.toLowerCase() : '');
+                        return entryLower === usernameLower;
+                    }) + 1;
                     if (rank > 0 && rank <= 3) {
                         rankings.push({ type: 'Clicker', rank: rank });
                     }
@@ -12098,7 +11921,10 @@
                     const scoreArray = Object.values(minesweeperScores)
                         .filter(entry => entry && entry.username)
                         .sort((a, b) => (a.time || Infinity) - (b.time || Infinity));
-                    const rank = scoreArray.findIndex(entry => entry.usernameLower === usernameLower) + 1;
+                    const rank = scoreArray.findIndex(entry => {
+                        const entryLower = entry.usernameLower || (entry.username ? entry.username.toLowerCase() : '');
+                        return entryLower === usernameLower;
+                    }) + 1;
                     if (rank > 0 && rank <= 3) {
                         rankings.push({ type: 'Minesweeper', rank: rank });
                     }
@@ -12114,7 +11940,10 @@
                     const scoreArray = Object.values(snakeScores)
                         .filter(entry => entry && entry.username)
                         .sort((a, b) => (b.score || 0) - (a.score || 0));
-                    const rank = scoreArray.findIndex(entry => entry.usernameLower === usernameLower) + 1;
+                    const rank = scoreArray.findIndex(entry => {
+                        const entryLower = entry.usernameLower || (entry.username ? entry.username.toLowerCase() : '');
+                        return entryLower === usernameLower;
+                    }) + 1;
                     if (rank > 0 && rank <= 3) {
                         rankings.push({ type: 'Snake', rank: rank });
                     }
@@ -12130,7 +11959,10 @@
                     const scoreArray = Object.values(hexagonScores)
                         .filter(entry => entry && entry.username)
                         .sort((a, b) => (b.score || 0) - (a.score || 0));
-                    const rank = scoreArray.findIndex(entry => entry.usernameLower === usernameLower) + 1;
+                    const rank = scoreArray.findIndex(entry => {
+                        const entryLower = entry.usernameLower || (entry.username ? entry.username.toLowerCase() : '');
+                        return entryLower === usernameLower;
+                    }) + 1;
                     if (rank > 0 && rank <= 3) {
                         rankings.push({ type: 'Hexagon Hogs', rank: rank });
                     }
@@ -12146,7 +11978,10 @@
                     const scoreArray = Object.values(timeScores)
                         .filter(entry => entry && entry.username)
                         .sort((a, b) => (b.timeSpent || 0) - (a.timeSpent || 0));
-                    const rank = scoreArray.findIndex(entry => entry.usernameLower === usernameLower) + 1;
+                    const rank = scoreArray.findIndex(entry => {
+                        const entryLower = entry.usernameLower || (entry.username ? entry.username.toLowerCase() : '');
+                        return entryLower === usernameLower;
+                    }) + 1;
                     if (rank > 0 && rank <= 3) {
                         rankings.push({ type: 'Time Spent', rank: rank });
                     }
@@ -12557,15 +12392,19 @@
             
             if (success) {
                 playSuccessSound();
-                successEl.textContent = 'Account created! You can now login.';
+                successEl.textContent = 'Welcome! Your account is ready.';
                 // Clear form
                 document.getElementById('signupUsername').value = '';
                 document.getElementById('signupPassword').value = '';
                 document.getElementById('signupPasswordConfirm').value = '';
-                // Switch to login tab after 1 second
-                setTimeout(() => {
-                    switchTab('login');
-                }, 1000);
+                
+                localStorage.setItem('loggedInUsername', userData.username);
+                localStorage.setItem('loggedInUsernameLower', usernameLower);
+                localStorage.setItem('loginTime', Date.now().toString());
+                playLoginSound();
+                showMainPage();
+                unlockEverything(true);
+                initChatAndFriends();
             } else {
                 errorEl.textContent = 'Failed to create account. Please try again.';
                 playErrorSound();
@@ -12672,7 +12511,9 @@
                 }
                 
                 // If user doesn't exist, create account
+                let isNewGoogleAccount = false;
                 if (!userData) {
+                    isNewGoogleAccount = true;
                     // Make sure username is unique
                     let finalUsername = username;
                     let finalUsernameLower = usernameLower;
@@ -12724,6 +12565,11 @@
                 
                 // Show main page
                 showMainPage();
+                
+                if (isNewGoogleAccount) {
+                    unlockEverything(true);
+                }
+                initChatAndFriends();
                 
             } catch (error) {
                 console.error('Google Sign-In error:', error);
@@ -12823,6 +12669,10 @@
                 
                 // Check if user is admin (Finley)
                 checkAdminStatus();
+                
+                // Reset game state variables to prevent data transfer between accounts
+                hexagonScore = 0;
+                hexagonHogsSlapped = 0;
                 
                 // Sync all game data from Firebase
                 syncAllGameData();
@@ -13389,11 +13239,31 @@
         async function syncHexagonScore(usernameLower) {
             try {
                 const cloudData = await readFromFirebase(`hexagonScores/${usernameLower}`);
-                const localScore = hexagonScore || 0;
                 const cloudScore = cloudData?.score || 0;
+                
+                // Load the user's actual score from cloud first, then compare with local
+                // Only use local score if it's from the current session (not from previous user)
+                const currentUsername = localStorage.getItem('loggedInUsername');
+                const currentUsernameLower = localStorage.getItem('loggedInUsernameLower');
+                
+                // Reset hexagonScore if we're syncing for a different user
+                // This prevents data transfer between accounts
+                if (currentUsernameLower !== usernameLower) {
+                    hexagonScore = 0;
+                    hexagonHogsSlapped = 0;
+                    return;
+                }
+                
+                // If cloud has a score, use that as the baseline
+                if (cloudScore > 0) {
+                    hexagonScore = Math.max(hexagonScore, cloudScore);
+                }
+                
+                const localScore = hexagonScore || 0;
                 
                 if (cloudScore > localScore) {
                     // Cloud has higher score
+                    hexagonScore = cloudScore;
                     syncConflicts.push({
                         game: 'Hexagon Hogs',
                         type: 'score',
@@ -13405,7 +13275,7 @@
                 } else if (localScore > cloudScore && localScore > 0) {
                     // Local has higher score, save to cloud
                     await writeToFirebase(`hexagonScores/${usernameLower}`, {
-                        username: localStorage.getItem('loggedInUsername'),
+                        username: currentUsername,
                         usernameLower: usernameLower,
                         score: localScore,
                         timestamp: Date.now()
