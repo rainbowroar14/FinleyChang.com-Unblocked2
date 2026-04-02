@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clever | Portal</title>
+    <title>FinVerse</title>
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234169E1'/%3E%3Ctext x='50' y='75' font-size='70' font-weight='bold' font-family='Arial, sans-serif' text-anchor='middle' fill='white' filter='url(%23glow)'%3EC%3C/text%3E%3Cdefs%3E%3Cfilter id='glow'%3E%3CfeGaussianBlur stdDeviation='3' result='coloredBlur'/%3E%3CfeMerge%3E%3CfeMergeNode in='coloredBlur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E">
     <!-- Firebase SDK -->
@@ -851,7 +851,7 @@
             transform: translateY(-2px);
         }
         
-        .finhub-title {
+        .finverse-title {
             display: flex;
             align-items: center;
             gap: 5px;
@@ -874,9 +874,11 @@
         .title-letter.f { color: #58a6ff; }
         .title-letter.i { color: #f0883e; }
         .title-letter.n { color: #bc8cff; }
-        .title-letter.h { color: #3fb950; }
-        .title-letter.u { color: #f85149; }
-        .title-letter.b { color: #ffa657; }
+        .title-letter.v { color: #3fb950; }
+        .title-letter.e { color: #f85149; }
+        .title-letter.r { color: #ffa657; }
+        .title-letter.s { color: #79c0ff; }
+        .title-letter.e2 { color: #d2a8ff; }
         
         .subtitle {
             color: #8b949e;
@@ -2748,7 +2750,7 @@
     <!-- Login Page -->
     <div class="page login-page" id="loginPage">
         <div class="login-container">
-            <h2>Welcome to FinHub</h2>
+            <h2>Welcome to FinVerse</h2>
             <div class="login-tabs">
                 <div class="login-tab active" onclick="switchTab('login')">Login</div>
                 <div class="login-tab" onclick="switchTab('signup')">Sign Up</div>
@@ -2821,7 +2823,7 @@
         <div class="hexagon-shape"></div>
     </div>
     
-    <!-- Main page with FinHub title -->
+    <!-- Main page with FinVerse title -->
     <div class="page hidden" id="mainPage">
         <!-- Unlock Overlay -->
         <div class="unlock-overlay" id="unlockOverlay">
@@ -2914,15 +2916,17 @@
                     
                     <div style="margin-bottom: 20px;">
                         <label style="display: block; margin-bottom: 8px; color: #c9d1d9; font-weight: bold;">Title Colors</label>
-                        <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;">
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
                             <input type="color" class="customThemeLetterColor" data-index="0" value="#58a6ff" style="width: 100%; height: 50px; border: 1px solid #30363d; border-radius: 4px; cursor: pointer;">
                             <input type="color" class="customThemeLetterColor" data-index="1" value="#f0883e" style="width: 100%; height: 50px; border: 1px solid #30363d; border-radius: 4px; cursor: pointer;">
                             <input type="color" class="customThemeLetterColor" data-index="2" value="#bc8cff" style="width: 100%; height: 50px; border: 1px solid #30363d; border-radius: 4px; cursor: pointer;">
                             <input type="color" class="customThemeLetterColor" data-index="3" value="#3fb950" style="width: 100%; height: 50px; border: 1px solid #30363d; border-radius: 4px; cursor: pointer;">
                             <input type="color" class="customThemeLetterColor" data-index="4" value="#f85149" style="width: 100%; height: 50px; border: 1px solid #30363d; border-radius: 4px; cursor: pointer;">
                             <input type="color" class="customThemeLetterColor" data-index="5" value="#ffa657" style="width: 100%; height: 50px; border: 1px solid #30363d; border-radius: 4px; cursor: pointer;">
+                            <input type="color" class="customThemeLetterColor" data-index="6" value="#79c0ff" style="width: 100%; height: 50px; border: 1px solid #30363d; border-radius: 4px; cursor: pointer;">
+                            <input type="color" class="customThemeLetterColor" data-index="7" value="#d2a8ff" style="width: 100%; height: 50px; border: 1px solid #30363d; border-radius: 4px; cursor: pointer;">
                         </div>
-                        <p style="font-size: 12px; color: #8b949e; margin-top: 5px;">One color per letter (F-I-N-H-U-B)</p>
+                        <p style="font-size: 12px; color: #8b949e; margin-top: 5px;">One color per letter (F-i-n-V-e-r-s-e)</p>
                     </div>
                     
                     <div style="margin-bottom: 20px;">
@@ -2952,11 +2956,13 @@
                         <div id="customThemePreview" style="width: 100%; height: 150px; background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%); border: 2px solid #30363d; border-radius: 8px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
                             <div id="customThemePreviewTitle" style="font-size: 48px; font-weight: bold; letter-spacing: 4px;">
                                 <span class="preview-letter" style="color: #58a6ff;">F</span>
-                                <span class="preview-letter" style="color: #f0883e;">I</span>
-                                <span class="preview-letter" style="color: #bc8cff;">N</span>
-                                <span class="preview-letter" style="color: #3fb950;">H</span>
-                                <span class="preview-letter" style="color: #f85149;">U</span>
-                                <span class="preview-letter" style="color: #ffa657;">B</span>
+                                <span class="preview-letter" style="color: #f0883e;">i</span>
+                                <span class="preview-letter" style="color: #bc8cff;">n</span>
+                                <span class="preview-letter" style="color: #3fb950;">V</span>
+                                <span class="preview-letter" style="color: #f85149;">e</span>
+                                <span class="preview-letter" style="color: #ffa657;">r</span>
+                                <span class="preview-letter" style="color: #79c0ff;">s</span>
+                                <span class="preview-letter" style="color: #d2a8ff;">e</span>
                             </div>
                         </div>
                         <button onclick="updateCustomThemePreview()" style="margin-top: 10px; padding: 8px 16px; background: #58a6ff; color: white; border: none; border-radius: 6px; cursor: pointer;">🔄 Update Preview</button>
@@ -3462,13 +3468,15 @@
         </div>
         
         
-        <div class="finhub-title" id="finhubTitle">
+        <div class="finverse-title" id="finverseTitle">
             <span class="title-letter f" data-letter="F">F</span>
-            <span class="title-letter i" data-letter="I">I</span>
-            <span class="title-letter n" data-letter="N">N</span>
-            <span class="title-letter h" data-letter="H">H</span>
-            <span class="title-letter u" data-letter="U">U</span>
-            <span class="title-letter b" data-letter="B">B</span>
+            <span class="title-letter i" data-letter="i">i</span>
+            <span class="title-letter n" data-letter="n">n</span>
+            <span class="title-letter v" data-letter="V">V</span>
+            <span class="title-letter e" data-letter="e">e</span>
+            <span class="title-letter r" data-letter="r">r</span>
+            <span class="title-letter s" data-letter="s">s</span>
+            <span class="title-letter e2" data-letter="e">e</span>
         </div>
         
         <p class="subtitle">Built with code, powered by Finley</p>
@@ -3672,9 +3680,9 @@
             }, 500);
         });
         
-        // Mouse proximity effect for FINHUB title
+        // Mouse proximity effect for FinVerse title
         document.addEventListener('DOMContentLoaded', () => {
-            const titleContainer = document.getElementById('finhubTitle');
+            const titleContainer = document.getElementById('finverseTitle');
             if (titleContainer) {
                 const letters = titleContainer.querySelectorAll('.title-letter');
                 
@@ -4351,7 +4359,7 @@
         }
         
         function handleColorCommand(colorArg) {
-            const titleContainer = document.getElementById('finhubTitle');
+            const titleContainer = document.getElementById('finverseTitle');
             if (!titleContainer) return;
             
             const letters = titleContainer.querySelectorAll('.title-letter');
@@ -4364,7 +4372,7 @@
             
             if (colorArg === 'normal' || colorArg === '') {
                 // Reset to default colors and restore original letters
-                const originalLetters = ['F', 'I', 'N', 'H', 'U', 'B'];
+                const originalLetters = ['F', 'i', 'n', 'V', 'e', 'r', 's', 'e'];
                 letters.forEach((letter, index) => {
                     // Restore original letter if it was changed
                     if (letter.dataset.originalLetter) {
@@ -4374,8 +4382,8 @@
                         letter.textContent = originalLetters[index] || letter.textContent;
                     }
                     letter.style.display = '';
-                    const defaultColors = ['#58a6ff', '#f0883e', '#bc8cff', '#3fb950', '#f85149', '#ffa657'];
-                    letter.style.color = defaultColors[index];
+                    const defaultColors = ['#58a6ff', '#f0883e', '#bc8cff', '#3fb950', '#f85149', '#ffa657', '#79c0ff', '#d2a8ff'];
+                    letter.style.color = defaultColors[index] || '#58a6ff';
                     letter.style.textShadow = '';
                     letter.style.fontSize = '72px';
                 });
@@ -4412,14 +4420,10 @@
                 });
             } else if (colorArg === 'landry remix' || colorArg === 'landryremix') {
                 // Landry Remix - turn letters into Among Us characters (16x16 pixel sprites)
-                const originalLetters = ['F', 'I', 'N', 'H', 'U', 'B'];
+                const originalLetters = ['F', 'i', 'n', 'V', 'e', 'r', 's', 'e'];
                 const amongUsColors = [
-                    '#ff0000', // Red
-                    '#00ff00', // Green
-                    '#0000ff', // Blue
-                    '#ffff00', // Yellow
-                    '#ff00ff', // Purple/Magenta
-                    '#ff8800'  // Orange
+                    '#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#ff8800',
+                    '#00ffff', '#ff66cc'
                 ];
                 
                 letters.forEach((letter, index) => {
@@ -4478,9 +4482,9 @@
                     letter.style.textShadow = '2px 2px 0px rgba(0, 0, 0, 0.3)';
                 });
             } else if (colorArg === '67') {
-                // Turn FinHub into "67"
+                // Turn FinVerse into "67"
                 is67Theme = true;
-                const originalLetters = ['F', 'I', 'N', 'H', 'U', 'B'];
+                const originalLetters = ['F', 'i', 'n', 'V', 'e', 'r', 's', 'e'];
                 letters.forEach((letter, index) => {
                     if (index < 2) {
                         letter.textContent = index === 0 ? '6' : '7';
@@ -4497,7 +4501,7 @@
                     return;
                 }
                 // Add 41 to 67
-                const titleContainer = document.getElementById('finhubTitle');
+                const titleContainer = document.getElementById('finverseTitle');
                 if (titleContainer) {
                     // Find the "7" letter and add "41" after it
                     const letters = titleContainer.querySelectorAll('.title-letter');
@@ -4573,7 +4577,7 @@
         }
         
         function handleSizeCommand(size) {
-            const titleContainer = document.getElementById('finhubTitle');
+            const titleContainer = document.getElementById('finverseTitle');
             if (!titleContainer) return;
             
             const letters = titleContainer.querySelectorAll('.title-letter');
@@ -4623,12 +4627,12 @@
             is67Theme = false;
             
             // Remove any extra letters added by 41 command
-            const titleContainer = document.getElementById('finhubTitle');
+            const titleContainer = document.getElementById('finverseTitle');
             if (titleContainer) {
                 const letters = titleContainer.querySelectorAll('.title-letter');
-                // Remove any letters beyond the original 6
-                if (letters.length > 6) {
-                    for (let i = 6; i < letters.length; i++) {
+                // Remove any letters beyond the original 8 (FinVerse)
+                if (letters.length > 8) {
+                    for (let i = 8; i < letters.length; i++) {
                         letters[i].remove();
                     }
                 }
@@ -9408,7 +9412,7 @@
         let unlockedThemes = new Set(['default']);
         let themeCursors = [];
         let themeMinesweeperInstance = null;
-        let themeLetterClicks = 0; // Track clicks on FINHUB letters
+        let themeLetterClicks = 0; // Track clicks on FinVerse letters
         let themeLetterSizes = {}; // Track size of each letter
         
         function toggleThemes() {
@@ -9675,8 +9679,8 @@
             });
             themeCursors = [];
             
-            // Reset FINHUB letters
-            const titleContainer = document.getElementById('finhubTitle');
+            // Reset FinVerse title letters
+            const titleContainer = document.getElementById('finverseTitle');
             if (titleContainer) {
                 titleContainer.style.transform = '';
                 titleContainer.style.animation = ''; // Clear top clicker animation
@@ -9687,8 +9691,8 @@
                     letter.style.opacity = '1';
                     letter.style.cursor = 'default';
                     letter.onclick = null;
-                    const defaultColors = ['#58a6ff', '#f0883e', '#bc8cff', '#3fb950', '#f85149', '#ffa657'];
-                    letter.style.color = defaultColors[index];
+                    const defaultColors = ['#58a6ff', '#f0883e', '#bc8cff', '#3fb950', '#f85149', '#ffa657', '#79c0ff', '#d2a8ff'];
+                    letter.style.color = defaultColors[index] || '#58a6ff';
                     letter.style.textShadow = '';
                     letter.style.background = '';
                     letter.style.border = '';
@@ -9791,8 +9795,8 @@
             // Add click-themed background (cursor trails, click effects)
             createClickThemeBackground();
             
-            // Make FINHUB letters clickable and grow
-            const titleContainer = document.getElementById('finhubTitle');
+            // Make FinVerse letters clickable and grow
+            const titleContainer = document.getElementById('finverseTitle');
             if (titleContainer) {
                 const letters = titleContainer.querySelectorAll('.title-letter');
                 letters.forEach((letter, index) => {
@@ -10152,8 +10156,8 @@
                 : 'radial-gradient(circle at center, #1a0a00 0%, #000000 100%)';
             bg.style.opacity = '0.9';
             
-            // Make FINHUB yellow, glowing, and floating
-            const titleContainer = document.getElementById('finhubTitle');
+            // Make FinVerse yellow, glowing, and floating
+            const titleContainer = document.getElementById('finverseTitle');
             if (titleContainer) {
                 const letters = titleContainer.querySelectorAll('.title-letter');
                 letters.forEach(letter => {
@@ -10473,8 +10477,8 @@
             // Add grass pattern
             createGrassPattern(bg);
             
-            // Make FinHub title look like grass
-            const titleContainer = document.getElementById('finhubTitle');
+            // Make FinVerse title look like grass
+            const titleContainer = document.getElementById('finverseTitle');
             if (titleContainer) {
                 const letters = titleContainer.querySelectorAll('.title-letter');
                 letters.forEach((letter, index) => {
@@ -10664,8 +10668,8 @@
                 : 'linear-gradient(135deg, #1a0a00 0%, #2d1a00 50%, #1a0a00 100%)';
             bg.style.opacity = '0.9';
             
-            // Make FinHub title rainbow colors
-            const titleContainer = document.getElementById('finhubTitle');
+            // Make FinVerse title rainbow colors
+            const titleContainer = document.getElementById('finverseTitle');
             if (titleContainer) {
                 const letters = titleContainer.querySelectorAll('.title-letter');
                 letters.forEach((letter) => {
@@ -10734,8 +10738,8 @@
                 : 'linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%)';
             bg.style.opacity = '0.95';
             
-            // Make FinHub title look like word tiles
-            const titleContainer = document.getElementById('finhubTitle');
+            // Make FinVerse title look like word tiles
+            const titleContainer = document.getElementById('finverseTitle');
             if (titleContainer) {
                 const letters = titleContainer.querySelectorAll('.title-letter');
                 letters.forEach((letter, index) => {
@@ -10871,8 +10875,8 @@
                 }
             }
             
-            // Make FinHub title look like Tetris blocks
-            const titleContainer = document.getElementById('finhubTitle');
+            // Make FinVerse title look like Tetris blocks
+            const titleContainer = document.getElementById('finverseTitle');
             if (titleContainer) {
                 const letters = titleContainer.querySelectorAll('.title-letter');
                 letters.forEach((letter, index) => {
@@ -11364,7 +11368,7 @@
                     bg.style.opacity = '0.9';
                     
                     // Apply title colors
-                    const titleContainer = document.getElementById('finhubTitle');
+                    const titleContainer = document.getElementById('finverseTitle');
                     if (titleContainer) {
                         const letters = titleContainer.querySelectorAll('.title-letter');
                         letters.forEach((letter, index) => {
@@ -11560,8 +11564,8 @@
             pongThemeGame.ballSpeedX = 4;
             pongThemeGame.ballSpeedY = 3;
             
-            // Make FinHub title look like Pong paddles
-            const titleContainer = document.getElementById('finhubTitle');
+            // Make FinVerse title look like Pong paddles
+            const titleContainer = document.getElementById('finverseTitle');
             if (titleContainer) {
                 const letters = titleContainer.querySelectorAll('.title-letter');
                 letters.forEach((letter, index) => {
@@ -11734,8 +11738,8 @@
                 : 'linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%)';
             bg.style.opacity = '0.9';
             
-            // Make FinHub title look like Block Blast blocks
-            const titleContainer = document.getElementById('finhubTitle');
+            // Make FinVerse title look like Block Blast blocks
+            const titleContainer = document.getElementById('finverseTitle');
             if (titleContainer) {
                 const letters = titleContainer.querySelectorAll('.title-letter');
                 letters.forEach((letter, index) => {
